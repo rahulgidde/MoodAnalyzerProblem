@@ -1,19 +1,40 @@
 public class MoodAnalyzer
 {
-    public static void main(String[] args)
+    private String message;
+
+    //DECLARE CONSTRUCTOR
+    public MoodAnalyzer()
     {
-        System.out.println("--------MOOD ANALYZER--------");
+        message = "";
     }
-    public String analyseMood(String message)
+
+    //PARAMETRIZED CONSTRUCTOR
+    public MoodAnalyzer(String message)
     {
-        if (message.contains("sad"))
+        this.message = message;
+    }
+
+    //METHOD TO ANALYZE MOOD
+    public String analyseMood()
+    {
+        if (message.contains("I am in sad mood"))
+        {
+            message = "SAD";
+        }
+        else if (message.contains("I am in happy mood"))
         {
             message = "SAD";
         }
         else
         {
-            message = "HAPPY";
+            message="HAPPY";
         }
         return message;
+    }
+
+    //MAIN METHOD
+    public static void main(String[] args)
+    {
+        System.out.println("--------MOOD ANALYZER--------");
     }
 }
