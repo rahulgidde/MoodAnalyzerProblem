@@ -1,11 +1,11 @@
 public class MoodAnalyzer
 {
-    private String message;
+    String message;
 
     //DECLARE CONSTRUCTOR
     public MoodAnalyzer()
     {
-        message="";
+
     }
 
     //PARAMETRIZED CONSTRUCTOR
@@ -17,15 +17,17 @@ public class MoodAnalyzer
     //METHOD TO ANALYZE MOOD
     public String analyseMood()
     {
-        if (message.contains("sad"))
+        try
         {
-            message = "SAD";
+            if (message.contains("sad"))
+                return "SAD";
+            else
+                return  "HAPPY";
         }
-        else
+        catch (NullPointerException e)
         {
-            message="HAPPY";
+          return "HAPPY";
         }
-        return message;
     }
 
     //MAIN METHOD
