@@ -5,7 +5,7 @@ public class MoodAnalyzer
     //DECLARE CONSTRUCTOR
     public MoodAnalyzer()
     {
-        message = "";
+        message="";
     }
 
     //PARAMETRIZED CONSTRUCTOR
@@ -17,11 +17,7 @@ public class MoodAnalyzer
     //METHOD TO ANALYZE MOOD
     public String analyseMood()
     {
-        if (message.contains("I am in sad mood"))
-        {
-            message = "SAD";
-        }
-        else if (message.contains("I am in happy mood"))
+        if (message.contains("sad"))
         {
             message = "SAD";
         }
