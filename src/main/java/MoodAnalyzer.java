@@ -14,11 +14,20 @@ public class MoodAnalyzer
         this.message = message;
     }
 
+    //PARAMETERISED METHOD TO ANALYSE MOOD
+    public String analyseMood(String message) throws MoodAnalysisException
+    {
+        this.message = message;
+        return analyseMood();
+    }
+
     //METHOD TO ANALYZE MOOD
-    public String analyseMood()
+    public String analyseMood() throws MoodAnalysisException
     {
         try
         {
+            if (message.length() == 0 )
+                throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.ENTER_EMPTY,"Please Enter proper Mood");
             if (message.contains("sad"))
                 return "SAD";
             else
@@ -26,7 +35,7 @@ public class MoodAnalyzer
         }
         catch (NullPointerException e)
         {
-          return "HAPPY";
+            throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.ENTER_NULL,"Please Enter proper Mood");
         }
     }
 
