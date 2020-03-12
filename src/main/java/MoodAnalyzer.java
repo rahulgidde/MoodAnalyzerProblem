@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class MoodAnalyzer
 {
     String message;
@@ -37,6 +39,18 @@ public class MoodAnalyzer
         {
             throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.ENTER_NULL,"Please Enter proper Mood");
         }
+    }
+
+    //METHOD TO CHECK TWO OBJECTS ARE EQUAL OR NOT
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        MoodAnalyzer that = (MoodAnalyzer) o;
+        return Objects.equals(message, that.message);
     }
 
     //MAIN METHOD

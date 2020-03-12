@@ -61,5 +61,23 @@ public class MoodAnalyzerTest
             Assert.assertEquals(MoodAnalysisException.ExceptionType.ENTER_EMPTY,e.type);
         }
     }
+
+    @Test
+    public void givenHappyMessage_WithDefaultConstructor_ShouldReturnHappy()
+    {
+        try
+        {
+            MoodAnalyzer analyzer = new MoodAnalyzer();
+            MoodAnalyzer moodAnalyzer = MoodAnalyserFactory.createMoodAnalyzer();
+            boolean result = moodAnalyzer.equals(analyzer);
+            Assert.assertEquals(true, result);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
 }
+
 
