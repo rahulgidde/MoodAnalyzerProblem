@@ -1,6 +1,5 @@
 import org.junit.Assert;
 import org.junit.Test;
-
 import java.lang.reflect.Constructor;
 
 public class MoodAnalyzerTest
@@ -65,7 +64,7 @@ public class MoodAnalyzerTest
     }
 
     @Test
-    public void givenHappyMessage_WithDefaultConstructor_ShouldReturnHappy()
+    public void givenMoodAnalyzerClassName_WithDefaultConstructor_ShouldReturnObject()
     {
         try
         {
@@ -90,6 +89,19 @@ public class MoodAnalyzerTest
         catch (MoodAnalysisException e)
         {
             Assert.assertEquals(MoodAnalysisException.ExceptionType.NO_SUCH_CLASS,e.type);
+        }
+    }
+
+    @Test
+    public void givenParameter_WhenWrongParameter_ShouldReturnException()
+    {
+        try
+        {
+            Constructor<?> analyzeConstructor = MoodAnalyserFactory.getConstructor("MoodAnalyzer",Integer.class);
+        }
+        catch (MoodAnalysisException e)
+        {
+            Assert.assertEquals(MoodAnalysisException.ExceptionType.NO_SUCH_METHOD,e.type);
         }
     }
 }

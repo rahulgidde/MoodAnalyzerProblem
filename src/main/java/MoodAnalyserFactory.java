@@ -3,9 +3,6 @@ import java.lang.reflect.InvocationTargetException;
 
 public class MoodAnalyserFactory
 {
-
-    private static Class<?> param;
-
     public static MoodAnalyzer createMoodAnalyzer() throws MoodAnalysisException
     {
         try
@@ -45,13 +42,13 @@ public class MoodAnalyserFactory
             Class moodAnalyzerClass = Class.forName(className);
             return moodAnalyzerClass.getConstructor(param);
         }
-        catch (NoSuchMethodException e)
-        {
-            throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.NO_SUCH_METHOD,"Please Enter Proper Method Name");
-        }
         catch (ClassNotFoundException e)
         {
             throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.NO_SUCH_CLASS,"Please Enter Proper Class Name");
+        }
+        catch (NoSuchMethodException e)
+        {
+            throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.NO_SUCH_METHOD,"Please Enter Proper Method Name");
         }
     }
 }
