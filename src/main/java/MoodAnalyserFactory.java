@@ -78,4 +78,22 @@ public class MoodAnalyserFactory
             throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.NO_SUCH_METHOD,"Please Enter Proper Method Name");
         }
     }
+
+    //METHOD TO CHECK CLASS NOT FOUND EXCEPTION AND METHOD NOT FOUND EXCEPTION WITH PARAMETRIZED CONSTRUCTOR
+    public static Constructor<?> getConstructor(String className, String message, Class<?>... param) throws  MoodAnalysisException
+    {
+        try
+        {
+            Class moodAnalyzerClass = Class.forName(className);
+            return moodAnalyzerClass.getConstructor(param);
+        }
+        catch (ClassNotFoundException e)
+        {
+            throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.NO_SUCH_CLASS,"Please Enter Proper Class Name");
+        }
+        catch (NoSuchMethodException e)
+        {
+            throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.NO_SUCH_METHOD,"Please Enter Proper Method Name");
+        }
+    }
 }

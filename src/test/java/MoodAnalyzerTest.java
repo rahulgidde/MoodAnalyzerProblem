@@ -82,7 +82,7 @@ public class MoodAnalyzerTest
     }
 
     @Test
-    public void givenClassName_WhenImproper_ShouldReturnException()
+    public void givenClassName_WhenImproper_ThenReturnException()
     {
         try
         {
@@ -95,7 +95,7 @@ public class MoodAnalyzerTest
     }
 
     @Test
-    public void givenParameter_WhenWrongParameter_ShouldReturnException()
+    public void givenParameter_WhenWrongParameter_ThenReturnException()
     {
         try
         {
@@ -108,7 +108,7 @@ public class MoodAnalyzerTest
     }
 
     @Test
-    public void givenMoodAnalyzerClassName_WithParametrizedConstructor_ShouldReturnObject()
+    public void givenClassName_WithParametrizedConstructor_ShouldReturnObject()
     {
         try
         {
@@ -120,6 +120,19 @@ public class MoodAnalyzerTest
         catch (Exception e)
         {
             e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void givenClassNameWithConstructor_WhenImproper_ThenReturnException()
+    {
+        try
+        {
+            Constructor<?> analyzeConstructor = MoodAnalyserFactory.getConstructor("MoodAnal","I am in Happy Mood");
+        }
+        catch (MoodAnalysisException e)
+        {
+            Assert.assertEquals(MoodAnalysisException.ExceptionType.NO_SUCH_CLASS,e.type);
         }
     }
 }
