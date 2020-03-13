@@ -1,6 +1,8 @@
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.lang.reflect.Constructor;
+
 public class MoodAnalyzerTest
 {
     String result;
@@ -78,6 +80,18 @@ public class MoodAnalyzerTest
         }
     }
 
+    @Test
+    public void givenClassName_WhenImproper_ShouldReturnException()
+    {
+        try
+        {
+            Constructor<?> analyzeConstructor = MoodAnalyserFactory.getConstructor("Myclass");
+        }
+        catch (MoodAnalysisException e)
+        {
+            Assert.assertEquals(MoodAnalysisException.ExceptionType.NO_SUCH_CLASS,e.type);
+        }
+    }
 }
 
 
