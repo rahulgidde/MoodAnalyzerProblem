@@ -1,5 +1,7 @@
 import org.junit.Assert;
 import org.junit.Test;
+import sun.security.ssl.HandshakeInStream;
+
 import java.lang.reflect.Constructor;
 
 public class MoodAnalyzerTest
@@ -104,6 +106,23 @@ public class MoodAnalyzerTest
             Assert.assertEquals(MoodAnalysisException.ExceptionType.NO_SUCH_METHOD,e.type);
         }
     }
+
+    @Test
+    public void givenMoodAnalyzerClassName_WithParametrizedConstructor_ShouldReturnObject()
+    {
+        try
+        {
+            MoodAnalyzer analyzer = new MoodAnalyzer("I am in happy mood");
+            MoodAnalyzer moodAnalyzer = MoodAnalyserFactory.createMoodAnalyzer("I am in happy mood");
+            boolean result = moodAnalyzer.equals(analyzer);
+            Assert.assertEquals(true, result);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
 }
+
 
 
