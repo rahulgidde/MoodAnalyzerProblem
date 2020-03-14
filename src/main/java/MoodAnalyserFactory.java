@@ -1,4 +1,5 @@
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 
 public class MoodAnalyserFactory
@@ -62,5 +63,22 @@ public class MoodAnalyserFactory
             throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.NO_SUCH_METHOD, "No Such Method");
         }
         return null;
+    }
+
+    public static void setFieldValue(Object result, String fieldName, String fieldValue) throws MoodAnalysisException
+    {
+        if (fieldName == null)
+            throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.NULL_VALUE,"Field value is empty");
+        try
+        {
+            Field field = result.getClass().getDeclaredField(fieldName);
+            field.set(result,fieldValue);
+        } catch (NoSuchFieldException e)
+        {
+            throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.NO_SUCH_FIELD, "Field is not available");
+        } catch (IllegalAccessException e)
+        {
+            e.printStackTrace();
+        }
     }
 }

@@ -1,6 +1,7 @@
 import org.junit.Assert;
 import org.junit.Test;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 
 public class MoodAnalyzerTest
 {
@@ -184,6 +185,53 @@ public class MoodAnalyzerTest
         catch (Exception e)
         {
             e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void givenHappyMessage_WhenProper_ThenReturnHappy()
+    {
+        try
+        {
+            Constructor constructor = MoodAnalyserFactory.getConstructor("MoodAnalyzer", String.class);
+            Object analyzer = MoodAnalyserFactory.createMoodAnalyzer(constructor,"I am in Happy Mood");
+            MoodAnalyserFactory.setFieldValue(analyzer,"message","I am in Happy Mood");
+            Object mood = MoodAnalyserFactory.invokeMethod(analyzer, "analyseMood");
+            Assert.assertEquals("HAPPY", mood);
+        }
+        catch (MoodAnalysisException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void givenHappyMessage_WhenImProper_ThenReturnNoSuchField()
+    {
+        try
+        {
+            Constructor constructor = MoodAnalyserFactory.getConstructor("MoodAnalyzer",String.class);
+            Object analyzer = MoodAnalyserFactory.createMoodAnalyzer(constructor,"");
+            MoodAnalyserFactory.setFieldValue(analyzer,"messge","I am in Happy Mood");
+            Object mood = MoodAnalyserFactory.invokeMethod(analyzer, "analyseMood");
+            Assert.assertEquals("HAPPY", mood);
+        }
+        catch (MoodAnalysisException e)
+        {
+            Assert.assertEquals(MoodAnalysisException.ExceptionType.NO_SUCH_FIELD, e.type);
+        }
+    }
+
+    @Test
+    public void givenHappyMessage_WhenNull_ThenReturnHappy()
+    {
+        try {
+            Constructor<?> constructor = MoodAnalyserFactory.getConstructor("MoodAnalyzer", String.class);
+            Object analyzer = MoodAnalyserFactory.createMoodAnalyzer(constructor, "");
+            MoodAnalyserFactory.setFieldValue(analyzer, null, "I am in Happy Mood");
+            Object mood = MoodAnalyserFactory.invokeMethod(analyzer, "analyzeMood");
+            Assert.assertEquals("HAPPY", mood);
+        } catch (MoodAnalysisException e) {
+            Assert.assertEquals(MoodAnalysisException.ExceptionType.NULL_VALUE, e.type);
         }
     }
 }
