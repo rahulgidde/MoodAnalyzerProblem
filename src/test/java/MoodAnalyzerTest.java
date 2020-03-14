@@ -230,7 +230,9 @@ public class MoodAnalyzerTest
             MoodAnalyserFactory.setFieldValue(analyzer, null, "I am in Happy Mood");
             Object mood = MoodAnalyserFactory.invokeMethod(analyzer, "analyzeMood");
             Assert.assertEquals("HAPPY", mood);
-        } catch (MoodAnalysisException e) {
+        }
+        catch (MoodAnalysisException e)
+        {
             Assert.assertEquals(MoodAnalysisException.ExceptionType.NULL_VALUE, e.type);
         }
     }
