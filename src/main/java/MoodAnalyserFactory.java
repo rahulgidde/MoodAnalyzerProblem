@@ -68,15 +68,17 @@ public class MoodAnalyserFactory
     public static void setFieldValue(Object result, String fieldName, String fieldValue) throws MoodAnalysisException
     {
         if (fieldName == null)
-            throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.NULL_VALUE,"Field value is empty");
+            throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.NULL_VALUE, "Field value is empty");
         try
         {
             Field field = result.getClass().getDeclaredField(fieldName);
             field.set(result,fieldValue);
-        } catch (NoSuchFieldException e)
+        }
+        catch (NoSuchFieldException e)
         {
             throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.NO_SUCH_FIELD, "Field is not available");
-        } catch (IllegalAccessException e)
+        }
+        catch (IllegalAccessException e)
         {
             e.printStackTrace();
         }

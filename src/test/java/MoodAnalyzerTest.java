@@ -194,12 +194,13 @@ public class MoodAnalyzerTest
         try
         {
             Constructor constructor = MoodAnalyserFactory.getConstructor("MoodAnalyzer", String.class);
-            Object analyzer = MoodAnalyserFactory.createMoodAnalyzer(constructor,"I am in Happy Mood");
+            Object analyzer = MoodAnalyserFactory.createMoodAnalyzer(constructor,"");
             MoodAnalyserFactory.setFieldValue(analyzer,"message","I am in Happy Mood");
             Object mood = MoodAnalyserFactory.invokeMethod(analyzer, "analyseMood");
             Assert.assertEquals("HAPPY", mood);
         }
-        catch (MoodAnalysisException e) {
+        catch (MoodAnalysisException e)
+        {
             e.printStackTrace();
         }
     }
@@ -209,7 +210,7 @@ public class MoodAnalyzerTest
     {
         try
         {
-            Constructor constructor = MoodAnalyserFactory.getConstructor("MoodAnalyzer",String.class);
+            Constructor constructor = MoodAnalyserFactory.getConstructor("MoodAnalyzer", String.class);
             Object analyzer = MoodAnalyserFactory.createMoodAnalyzer(constructor,"");
             MoodAnalyserFactory.setFieldValue(analyzer,"messge","I am in Happy Mood");
             Object mood = MoodAnalyserFactory.invokeMethod(analyzer, "analyseMood");
@@ -224,7 +225,8 @@ public class MoodAnalyzerTest
     @Test
     public void givenHappyMessage_WhenNull_ThenReturnHappy()
     {
-        try {
+        try
+        {
             Constructor<?> constructor = MoodAnalyserFactory.getConstructor("MoodAnalyzer", String.class);
             Object analyzer = MoodAnalyserFactory.createMoodAnalyzer(constructor, "");
             MoodAnalyserFactory.setFieldValue(analyzer, null, "I am in Happy Mood");
