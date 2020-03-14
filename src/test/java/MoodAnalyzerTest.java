@@ -1,79 +1,71 @@
 import org.junit.Assert;
 import org.junit.Test;
-import sun.security.ssl.HandshakeInStream;
 
 import java.lang.reflect.Constructor;
 
 public class MoodAnalyzerTest
 {
     String result;
+
     @Test
-    public void givenMessage_WhenSadMood_ThenReturnMood()
-    {
+    public void givenMessage_WhenSadMood_ThenReturnMood() {
         MoodAnalyzer moodAnalyzer = new MoodAnalyzer("I am in sad mood");
         try
         {
             result = moodAnalyzer.analyseMood();
-        }
-        catch(MoodAnalysisException e)
-        {
+        } catch (MoodAnalysisException e) {
             e.printStackTrace();
         }
-            Assert.assertEquals("SAD", result);
+        Assert.assertEquals("SAD", result);
     }
 
     @Test
-    public void givenMessage_WhenHappyMood_ThenReturnMood() throws MoodAnalysisException
-    {
+    public void givenMessage_WhenHappyMood_ThenReturnMood() throws MoodAnalysisException {
         MoodAnalyzer moodAnalyzer = new MoodAnalyzer("I am in happy mood");
         try
         {
             result = moodAnalyzer.analyseMood();
-        }
-        catch(MoodAnalysisException e)
+        } catch (MoodAnalysisException e)
         {
             e.printStackTrace();
         }
-            Assert.assertEquals("HAPPY", result);
+        Assert.assertEquals("HAPPY", result);
     }
 
-   @Test
-    public void givenMessage_WhenNullMood_ThenReturnMood()
-    {
+    @Test
+    public void givenMessage_WhenNullMood_ThenReturnMood() {
         MoodAnalyzer moodAnalyzer = new MoodAnalyzer(null);
         try
         {
             moodAnalyzer.analyseMood();
         }
-        catch(MoodAnalysisException e)
+        catch (MoodAnalysisException e)
         {
-            Assert.assertEquals(MoodAnalysisException.ExceptionType.ENTER_NULL,e.type);
+            Assert.assertEquals(MoodAnalysisException.ExceptionType.ENTER_NULL, e.type);
         }
     }
 
     @Test
-    public void givenMessage_WhenEmptyMood_ThenReturnMood()
-    {
+    public void givenMessage_WhenEmptyMood_ThenReturnMood() {
         MoodAnalyzer moodAnalyzer = new MoodAnalyzer("");
         try
         {
             moodAnalyzer.analyseMood();
         }
-        catch(MoodAnalysisException e)
+        catch (MoodAnalysisException e)
         {
-            Assert.assertEquals(MoodAnalysisException.ExceptionType.ENTER_EMPTY,e.type);
+            Assert.assertEquals(MoodAnalysisException.ExceptionType.ENTER_EMPTY, e.type);
         }
     }
 
     @Test
-    public void givenMoodAnalyzerClassName_WithDefaultConstructor_ShouldReturnObject()
-    {
+    public void givenMoodAnalyzerClassName_WithDefaultConstructor_ShouldReturnObject() {
         try
         {
-            MoodAnalyzer analyzer = new MoodAnalyzer();
-            MoodAnalyzer moodAnalyzer = MoodAnalyserFactory.createMoodAnalyzer();
-            boolean result = moodAnalyzer.equals(analyzer);
-            Assert.assertEquals(true, result);
+            MoodAnalyzer moodAnalyzer = new MoodAnalyzer();
+            Constructor<?> constructor = MoodAnalyserFactory.getConstructor("MoodAnalyzer");
+            Object result = MoodAnalyserFactory.createMoodAnalyzer(constructor);
+            Assert.assertEquals(moodAnalyzer, result);
         }
         catch (Exception e)
         {
@@ -82,38 +74,36 @@ public class MoodAnalyzerTest
     }
 
     @Test
-    public void givenMoodAnalyzer_WhenImproperClassName_ThenReturnException()
-    {
+    public void givenMoodAnalyzer_WhenImproperClassName_ThenReturnException() {
         try
         {
-            Constructor<?> analyzeConstructor = MoodAnalyserFactory.getConstructor("Myclass");
+            MoodAnalyserFactory.getConstructor("Myclass",String.class);
         }
         catch (MoodAnalysisException e)
         {
-            Assert.assertEquals(MoodAnalysisException.ExceptionType.NO_SUCH_CLASS,e.type);
+            Assert.assertEquals(MoodAnalysisException.ExceptionType.NO_SUCH_CLASS, e.type);
         }
     }
 
     @Test
-    public void givenMoodAnalyzer_WhenImproperParameter_ThenReturnException()
-    {
+    public void givenMoodAnalyzer_WhenImproperParameter_ThenReturnException() {
         try
         {
-            Constructor<?> analyzeConstructor = MoodAnalyserFactory.getConstructor("MoodAnalyzer",Integer.class);
+             MoodAnalyserFactory.getConstructor("MoodAnalyzer", Integer.class);
         }
         catch (MoodAnalysisException e)
         {
-            Assert.assertEquals(MoodAnalysisException.ExceptionType.NO_SUCH_METHOD,e.type);
+            Assert.assertEquals(MoodAnalysisException.ExceptionType.NO_SUCH_METHOD, e.type);
         }
     }
 
     @Test
-    public void givenMoodAnalyzer_WithParametrizedConstructor_ShouldReturnObject()
-    {
+    public void givenMoodAnalyzer_WithParametrizedConstructor_ShouldReturnObject() {
         try
         {
             MoodAnalyzer analyzer = new MoodAnalyzer("I am in happy mood");
-            MoodAnalyzer moodAnalyzer = MoodAnalyserFactory.createMoodAnalyzer("I am in happy mood");
+            Constructor<?> constructor = MoodAnalyserFactory.getConstructor("MoodAnalyzer", String.class);
+            MoodAnalyzer moodAnalyzer = MoodAnalyserFactory.createMoodAnalyzer(constructor, "I am in happy mood");
             boolean result = moodAnalyzer.equals(analyzer);
             Assert.assertEquals(true, result);
         }
@@ -128,11 +118,13 @@ public class MoodAnalyzerTest
     {
         try
         {
-            Constructor<?> analyzeConstructor = MoodAnalyserFactory.getConstructor("MoodAnal","I am in Happy Mood");
+            Constructor<?> constructor = MoodAnalyserFactory.getConstructor("MoodAnslyzer", String.class);
+            Object result = MoodAnalyserFactory.createMoodAnalyzer(constructor, "I am in happy mood");
+            MoodAnalyserFactory.invokeMethod(result, "analyzeMod");
         }
         catch (MoodAnalysisException e)
         {
-            Assert.assertEquals(MoodAnalysisException.ExceptionType.NO_SUCH_CLASS,e.type);
+            Assert.assertEquals(MoodAnalysisException.ExceptionType.NO_SUCH_CLASS, e.type);
         }
     }
 
@@ -141,11 +133,27 @@ public class MoodAnalyzerTest
     {
         try
         {
-            Constructor<?> analyzeConstructor = MoodAnalyserFactory.getConstructor("MoodAnal","I am in Happy Mood",Integer.class);
+            Constructor<?> constructor = MoodAnalyserFactory.getConstructor("MoodAnalyzer",Integer.class);
         }
         catch (MoodAnalysisException e)
         {
-            Assert.assertEquals(MoodAnalysisException.ExceptionType.NO_SUCH_CLASS,e.type);
+            Assert.assertEquals(MoodAnalysisException.ExceptionType.NO_SUCH_METHOD, e.type);
+        }
+    }
+
+    @Test
+    public void givenHappyMood_WhenProper_ThenReturnHappyMood()
+    {
+        try
+        {
+            Constructor<?> constructor = MoodAnalyserFactory.getConstructor("MoodAnalyzer", String.class);
+            Object result = MoodAnalyserFactory.createMoodAnalyzer(constructor, "I am in Happy mood");
+            Object mood = MoodAnalyserFactory.invokeMethod(result, "analyseMood");
+            Assert.assertEquals("HAPPY", mood);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
         }
     }
 }

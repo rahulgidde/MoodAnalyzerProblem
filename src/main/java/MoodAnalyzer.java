@@ -29,7 +29,7 @@ public class MoodAnalyzer
         try
         {
             if (message.length() == 0 )
-                throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.ENTER_EMPTY,"Please Enter proper Mood");
+                throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.ENTER_EMPTY, "Please Enter proper Mood");
             if (message.contains("sad"))
                 return "SAD";
             else
