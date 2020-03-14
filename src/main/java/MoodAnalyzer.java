@@ -37,19 +37,19 @@ public class MoodAnalyzer
         }
         catch (NullPointerException e)
         {
-            throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.ENTER_NULL,"Please Enter proper Mood");
+            throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.ENTER_NULL, "Please Enter proper Mood");
         }
     }
 
     //METHOD TO CHECK TWO OBJECTS ARE EQUAL OR NOT
     @Override
-    public boolean equals(Object o)
+    public boolean equals(Object object)
     {
-        if (this == o)
+        if (this == object)
             return true;
-        if (o == null || getClass() != o.getClass())
+        if (object == null || getClass() != object.getClass())
             return false;
-        MoodAnalyzer that = (MoodAnalyzer) o;
+        MoodAnalyzer that = (MoodAnalyzer) object;
         return Objects.equals(message, that.message);
     }
 

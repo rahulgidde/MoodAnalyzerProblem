@@ -1,6 +1,5 @@
 import org.junit.Assert;
 import org.junit.Test;
-
 import java.lang.reflect.Constructor;
 
 public class MoodAnalyzerTest
@@ -8,24 +7,29 @@ public class MoodAnalyzerTest
     String result;
 
     @Test
-    public void givenMessage_WhenSadMood_ThenReturnMood() {
+    public void givenMessage_WhenSadMood_ThenReturnMood()
+    {
         MoodAnalyzer moodAnalyzer = new MoodAnalyzer("I am in sad mood");
         try
         {
             result = moodAnalyzer.analyseMood();
-        } catch (MoodAnalysisException e) {
+        }
+        catch (MoodAnalysisException e)
+        {
             e.printStackTrace();
         }
         Assert.assertEquals("SAD", result);
     }
 
     @Test
-    public void givenMessage_WhenHappyMood_ThenReturnMood() throws MoodAnalysisException {
+    public void givenMessage_WhenHappyMood_ThenReturnMood()
+    {
         MoodAnalyzer moodAnalyzer = new MoodAnalyzer("I am in happy mood");
         try
         {
             result = moodAnalyzer.analyseMood();
-        } catch (MoodAnalysisException e)
+        }
+        catch (MoodAnalysisException e)
         {
             e.printStackTrace();
         }
@@ -33,7 +37,8 @@ public class MoodAnalyzerTest
     }
 
     @Test
-    public void givenMessage_WhenNullMood_ThenReturnMood() {
+    public void givenMessage_WhenNullMood_ThenReturnMood()
+    {
         MoodAnalyzer moodAnalyzer = new MoodAnalyzer(null);
         try
         {
@@ -46,7 +51,8 @@ public class MoodAnalyzerTest
     }
 
     @Test
-    public void givenMessage_WhenEmptyMood_ThenReturnMood() {
+    public void givenMessage_WhenEmptyMood_ThenReturnMood()
+    {
         MoodAnalyzer moodAnalyzer = new MoodAnalyzer("");
         try
         {
@@ -59,7 +65,8 @@ public class MoodAnalyzerTest
     }
 
     @Test
-    public void givenMoodAnalyzerClassName_WithDefaultConstructor_ShouldReturnObject() {
+    public void givenMoodAnalyzerClassName_WithDefaultConstructor_ShouldReturnObject()
+    {
         try
         {
             MoodAnalyzer moodAnalyzer = new MoodAnalyzer();
@@ -74,7 +81,8 @@ public class MoodAnalyzerTest
     }
 
     @Test
-    public void givenMoodAnalyzer_WhenImproperClassName_ThenReturnException() {
+    public void givenMoodAnalyzer_WhenImproperClassName_ThenReturnException()
+    {
         try
         {
             MoodAnalyserFactory.getConstructor("Myclass",String.class);
@@ -86,7 +94,8 @@ public class MoodAnalyzerTest
     }
 
     @Test
-    public void givenMoodAnalyzer_WhenImproperParameter_ThenReturnException() {
+    public void givenMoodAnalyzer_WhenImproperParameter_ThenReturnException()
+    {
         try
         {
              MoodAnalyserFactory.getConstructor("MoodAnalyzer", Integer.class);
@@ -98,7 +107,8 @@ public class MoodAnalyzerTest
     }
 
     @Test
-    public void givenMoodAnalyzer_WithParametrizedConstructor_ShouldReturnObject() {
+    public void givenMoodAnalyzer_WithParametrizedConstructor_ShouldReturnObject()
+    {
         try
         {
             MoodAnalyzer analyzer = new MoodAnalyzer("I am in happy mood");
@@ -142,7 +152,7 @@ public class MoodAnalyzerTest
     }
 
     @Test
-    public void givenHappyMood_WhenProper_ThenReturnHappyMood()
+    public void givenHappyMood_WhenProper_ThenReturnHappy()
     {
         try
         {
@@ -156,7 +166,24 @@ public class MoodAnalyzerTest
             e.printStackTrace();
         }
     }
+
+    @Test
+    public void givenHappyMood_WhenImProperMethodName_ThenReturnNoSuchMethod()
+    {
+        try
+        {
+            Constructor<?> constructor = MoodAnalyserFactory.getConstructor("MoodAnalyzer", String.class);
+            Object result = MoodAnalyserFactory.createMoodAnalyzer(constructor, "I am in Happy mood");
+            Object mood = MoodAnalyserFactory.invokeMethod(result, "analyaseMood");
+            Assert.assertEquals("HAPPY", mood);
+        }
+        catch (MoodAnalysisException e)
+        {
+            Assert.assertEquals(MoodAnalysisException.ExceptionType.NO_SUCH_METHOD, e.type);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
 }
-
-
-
